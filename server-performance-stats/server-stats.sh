@@ -23,5 +23,9 @@ echo "Disk Usage"
 echo -e "TOTAL: $TOTAL_DISK\tUSED: $USED_DISK\tUSED_PERCENT: $DISK_PERCENT"
 echo
 
+echo "Top 5 Processes by CPU"
+ps aux --sort -%cpu | head -n6 | awk '{print $1 "\t" $2 "\t" $3 "\t" $11}'
+echo
+
 echo "Top 5 Processes by Memory"
 ps aux --sort -%mem | head -n6 | awk '{print $1 "\t" $2 "\t" $4 "\t" $11}'
