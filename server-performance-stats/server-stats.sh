@@ -1,21 +1,15 @@
 #!/usr/bin/env bash
 
 echo "CPU Usage"
-CPU_FREE=$(top -bn1 | grep "Cpu(s)" | tr -s " " | cut -d " " -f 8)
-echo "$CPU_FREE%"
+top -bn1 | grep "Cpu(s)" | awk '{printf "Used_Percent: %.2f%\n", $8}'
 echo
 
 echo "Memory Usage"
 free | grep "Mem" | awk '{printf "Total: %.f\tUsed: %.f\tUsed_Percent: %.2f%\n", $2/1024, $3/1024, (($3/$2)*100)}'
 echo
 
-DISK_USAGE=$(df -h | grep "/" -w)
-TOTAL_DISK=$(echo $DISK_USAGE | cut -d " " -f 2)
-USED_DISK=$(echo $DISK_USAGE | cut -d " " -f 3)
-DISK_PERCENT=$(echo $DISK_USAGE | cut -d " " -f 5)
-
 echo "Disk Usage"
-echo -e "TOTAL: $TOTAL_DISK\tUSED: $USED_DISK\tUSED_PERCENT: $DISK_PERCENT"
+df -h | grep '/' -w | awk '{printf "Total: %s\tUsed: %s\tUsed_Percent: %s\n", $2, $3, $5}'
 echo
 
 echo "Top 5 Processes by CPU"
