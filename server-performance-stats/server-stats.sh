@@ -5,13 +5,8 @@ CPU_FREE=$(top -bn1 | grep "Cpu(s)" | tr -s " " | cut -d " " -f 8)
 echo "$CPU_FREE%"
 echo
 
-MEMORY=$(free -m | grep "Mem" | tr -s " ")
-TOTAL_MEMORY=$(echo "$MEMORY" | cut -d ' ' -f 2)
-USED_MEMORY=$(echo "$MEMORY" | cut -d ' ' -f 3)
-MEMORY_PERCENT=$(echo "scale=3;(($USED_MEMORY / $TOTAL_MEMORY) * 100)" | bc | sed 's/..$//')
-
 echo "Memory Usage"
-echo -e "TOTAL: $TOTAL_MEMORY\tUSED: $USED_MEMORY\tUSED_PERCENT: $MEMORY_PERCENT%"
+free | grep "Mem" | awk '{printf "Total: %.f\tUsed: %.f\tUsed_Percent: %.2f%\n", $2/1024, $3/1024, (($3/$2)*100)}'
 echo
 
 DISK_USAGE=$(df -h | grep "/" -w)
