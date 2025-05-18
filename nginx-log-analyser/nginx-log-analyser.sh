@@ -8,3 +8,7 @@ fi
 echo "Top 5 IP addresses with the most requests:"
 awk '{print $1};' nginx.log | sort | uniq -c | sort -nr | head -n5 | awk '{printf "%s - %d requests\n", $2, $1}'
 echo
+
+echo "Top 5 most requested paths:"
+awk '$7 ~ /^\// {print $7};' nginx.log | sort | uniq -c | sort -nr | head -n5 | awk '{printf "%s - %d requests\n", $2, $1}'
+echo
