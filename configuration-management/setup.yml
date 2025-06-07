@@ -1,0 +1,5 @@
+---
+- name: Build web server
+  hosts: webserver
+  roles:
+    - base
