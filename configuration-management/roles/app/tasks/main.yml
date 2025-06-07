@@ -1,0 +1,13 @@
+---
+- name: Copy compressed site
+  ansible.builtin.copy:
+    src: /Users/samallen/Code/Projects/devops-roadmap/configuration-management/site.tar.gz
+    dest: /tmp/site.tar.gz
+    mode: preserve
+
+- name: Uncompress site
+  ansible.builtin.unarchive:
+    src: /tmp/site.tar.gz
+    dest: /var/www/html
+    remote_src: true
+  become: true
