@@ -5,6 +5,16 @@
     dest: /tmp/site.tar.gz
     mode: preserve
 
+- name: Ensure directory exists
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+    recurse: true
+  become: true
+
 - name: Uncompress site
   ansible.builtin.unarchive:
     src: /tmp/site.tar.gz

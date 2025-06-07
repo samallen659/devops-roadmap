@@ -36,4 +36,4 @@
     dest: /etc/nginx/sites-enabled/site
     state: link
   become: true
-  notify: Restart NGINX
+  notify: Restart NGNIX
