@@ -2,6 +2,11 @@
 - name: Build web server
   hosts: webserver
   roles:
-    - base
-    - nginx
-    - app
+    - role: ssh
+      tags: ssh
+    - role: base
+      tags: base
+    - role: nginx
+      tags: nginx
+    - role: app
+      tags: app
