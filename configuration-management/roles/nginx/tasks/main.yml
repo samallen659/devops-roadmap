@@ -1,0 +1,39 @@
+---
+- name: Install NGINX
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  become: true
+
+- name: Start and enable NGINX
+  service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Remove default from sites-enabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: true
+
+- name: Remove default from sites-available
+  ansible.builtin.file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+  become: true
+
+- name: Copy nginx site
+  ansible.builtin.copy:
+    src: /Users/samallen/Code/Projects/devops-roadmap/configuration-management/nginx.conf
+    dest: /etc/nginx/sites-available/site
+    mode: "0644"
+  become: true
+
+- name: Symlink site to sites-enabled
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/site
+    dest: /etc/nginx/sites-enabled/site
+    state: link
+  become: true
+  notify: Restart NGINX

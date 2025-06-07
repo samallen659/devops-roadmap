@@ -3,3 +3,5 @@
   hosts: webserver
   roles:
     - base
+    - nginx
+    - app
