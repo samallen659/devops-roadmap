@@ -1,0 +1,13 @@
+---
+- name: Add SSH public key to server
+  ansible.builtin.authorized_key:
+    user: sama
+    key: "{{ lookup('file', '/Users/samallen/.ssh/id_rsa.pub') }}"
+
+- name: Disable password authentication
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#PasswordAuthentication"
+    line: PasswordAuthentication no
+  become: true
+  notify: Restart ssh
